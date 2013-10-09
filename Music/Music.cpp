@@ -592,7 +592,7 @@ inline size_t CMusic::sendFlush(size_t nBytesMax)
 }
 
 
-inline void CMusic::updateVolumeAndBalance()
+void CMusic::updateVolumeAndBalance()
 {
   // SCI_VOL expects relative sound pressure level in units of -0.5 dB,
   // going from 0 dB (max loudness x 1) to -127.5 dB (x 0.00015).
