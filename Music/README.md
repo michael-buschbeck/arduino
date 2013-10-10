@@ -14,7 +14,7 @@ How?
 
 ### Installation
 
-Download the `Music`, `Pin` and `Timer` directories and place them in the `libraries` folder in your Arduino Sketchbook directory.
+Download the `Music`, `Pin` and `Timer` directories and place them in the `libraries` folder in your Arduino Sketchbook directory. (The `Timer` library is only used by the `PlayWithControls` example. You don't need it if you don't want to compile and upload that particular example.)
 
 
 ### Usage
