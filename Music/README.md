@@ -5,7 +5,7 @@ This is a non-blocking library for [VS1053b](http://www.vlsi.fi/en/products/vs10
 Why?
 ----
 
-The library that comes with Seeedstudio's Music Shield blocks until it's done playing  so you can *either* play music *or* do anything else. Since I wanted to use the Music Shield to play some sound effects in parallel to doing other exciting stuff (like blinking an LED!), that just didn't do.
+The library that comes with Seeedstudio's Music Shield blocks until it's done playing - so you can *either* play music *or* do anything else. Since I wanted to use the Music Shield to play some sound effects in parallel to doing other exciting stuff (like blinking an LED!), that just didn't do.
 
 
 
@@ -26,7 +26,7 @@ Include the [SD](http://arduino.cc/en/Reference/SD) and [SPI](http://arduino.cc/
     #include "Music.h"
     #include "Pin.h"
 
-**Do not** include Seeedstudio's `MusicPlayer.h` library as well  they'll both try do use the same resources, and that won't work. (In particular, the Music library uses Arduino's standard [SD](http://arduino.cc/en/Reference/SD) and [SPI](http://arduino.cc/en/Reference/SPI) libraries, while Seeedstudio's library uses its own libraries for that.)
+**Do not** include Seeedstudio's `MusicPlayer.h` library as well - they'll both try do use the same resources, and that won't work. (In particular, the Music library uses Arduino's standard [SD](http://arduino.cc/en/Reference/SD) and [SPI](http://arduino.cc/en/Reference/SPI) libraries, while Seeedstudio's library uses its own libraries for that.)
 
 In your `setup()` routine, initialize everything:
 
@@ -68,9 +68,9 @@ After initialization, you can call the following methods:
 
 * `Music.reset()` does a hardware and software reset of the VS1053b chip. This is done automatically when `begin()` is called and really shouldn't be necessary during normal operation. When the VS1053b chip resets, you'll probably hear a soft clicking sound in the attached speakers; that's when the built-in DAC is switched on.
 
-The VS1053b chip has 2048 bytes of internal buffer. Depending on your music file's bit rate, that should give you ample time between consecutive `loop()` invocations to do your other stuff  for reference, a full buffer's worth of a 128 kbps MP3 file amounts to a bit more than 100 milliseconds that you are free to use as you please while the VS1053b chip runs out of data.
+The VS1053b chip has 2048 bytes of internal buffer. Depending on your music file's bit rate, that should give you ample time between consecutive `loop()` invocations to do your other stuff - for reference, a full buffer's worth of a 128 kbps MP3 file amounts to a bit more than 100 milliseconds that you are free to use as you please while the VS1053b chip runs out of data.
 
-You'll get best results if you call `loop()` as frequently as you can, and if your other code is also done in a non-blocking manner  see the [BlinkWithoutDelay](http://arduino.cc/en/Tutorial/BlinkWithoutDelay) tutorial for an example of how to do that.
+You'll get best results if you call `loop()` as frequently as you can, and if your other code is also done in a non-blocking manner - see the [BlinkWithoutDelay](http://arduino.cc/en/Tutorial/BlinkWithoutDelay) tutorial for an example of how to do that.
 
 
 
@@ -85,7 +85,7 @@ The per-channel volume can be manipulated as a combination of a linear volume an
 
 There are a few bugs in Seeedstudio's library that, for one reason or another, aren't in the Music library:
 
-* As long as the VS1053b chip's clock frequency multiplier hasn't been set to 3.5x, talking to it over SPI with full speed can cause it to receive garbled data  and that can cause the chip to not be initialized properly, which in turn can lead to distorted playback (and flaky SPI communication in general). Seeedstudio's code puts in a rather long delay after the initial SPI communication to set the clock frequency multiplier to work around that, but that's actually not necessary: Simply reduce the SPI clock speed during that early communication and upgrade the speed once the VS1053b chip is running at speed.
+* As long as the VS1053b chip's clock frequency multiplier hasn't been set to 3.5x, talking to it over SPI with full speed can cause it to receive garbled data - and that can cause the chip to not be initialized properly, which in turn can lead to distorted playback (and flaky SPI communication in general). Seeedstudio's code puts in a rather long delay after the initial SPI communication to set the clock frequency multiplier to work around that, but that's actually not necessary: Simply reduce the SPI clock speed during that early communication and upgrade the speed once the VS1053b chip is running at speed.
 
 * Pressing one of the on-board buttons blocks the library's internal loop until the button is released, which could conceivably lead to buffer underflow in the VS1053b chip's audio buffer. (Since most button presses skip or start or stop music anyway, that's only an issue when changing the volume, I guess.)
 
@@ -96,7 +96,7 @@ It's worse!
 
 There is no playlist support. And you'll have to open your music files yourself.
 
-The Music library does nothing with the on-board LED and buttons on Seeedstudio's Music Shield  but those are trivial to use in your own code, if you want to. (Or you can ignore them and use those pins otherwise, at least those connected to the buttons.)
+The Music library does nothing with the on-board LED and buttons on Seeedstudio's Music Shield - but those are trivial to use in your own code, if you want to. (Or you can ignore them and use those pins otherwise, at least those connected to the buttons.)
 
 The SD and SPI libraries used by Seeedstudio's library are slimmed down, which saves some program memory space.
 
