@@ -39,7 +39,7 @@ In your `setup()` routine, initialize everything:
     // initialize SD card reader
     SD.begin();
 
-    // initialize the Music library,
+    // initialize the Music library
     // using the default pins:
     // A0 - reset
     // A1 - data request
@@ -57,18 +57,18 @@ After initialization, you can call the following methods:
 
 * `Music.loop()` needs to be called over and over again and does all the actual work, which basically amounts to keeping the VS1053b's buffer filled with data from the music file. If you don't call `loop()` frequently enough, you'll probably get distorted or skipping sound. (See below for what "frequently enough" means.)
 
-* `Music.volume(uint8_t vol)` sets the playback volume on a linear scale from 0 (completely silent) to 255 (as loud as possible). The default is maximum volume. There are actually just 32 distinct volume levels available. Calling just `volume()`, without any arguments, returns the current volume.
+* `Music.volume(uint8_t vol)` sets the playback volume on a linear scale from 0 (completely silent) to 255, which is also the default (as loud as possible). Calling just `volume()`, without any arguments, returns the current volume.
 
 * `Music.balance(int8_t bal)` sets the balance between the left and right channels. -128 is all to the left (right channel is silent), +127 is all to the right (left channel silent), and 0, which is also the default, means both channels are at the same volume. Calling just `balance()`, without any arguments, returns the current balance.
 
 * `Music.state()` returns one of the following values:
-  * `MUSIC_STATE_IDLE` means that the library is currently not doing anything at all, and is ready to play music.  `play()` can only be called in this state. (It will be silently ignored in any other state.) It is safe (and efficient), but not necessary, to keep calling `loop()` in this state.
+  * `MUSIC_STATE_IDLE` means that the library is currently not doing anything at all, and is ready to play music. `play()` can only be called in this state. (It will be silently ignored in any other state.) It is safe (and efficient), but not necessary, to keep calling `loop()` in this state.
   * `MUSIC_STATE_PLAYING` means that the library is currently playing a music file.
   * `MUSIC_STATE_BUSY` means that the library is currently busy flushing the VS1053b chip's buffer after playback ended (because the end of the music file was reached or because you called `cancel()`). This state shouldn't last long, but you absolutely need to keep calling `loop()` at least until the library is back in idle state.
 
 * `Music.reset()` does a hardware and software reset of the VS1053b chip. This is done automatically when `begin()` is called and really shouldn't be necessary during normal operation. When the VS1053b chip resets, you'll probably hear a soft clicking sound in the attached speakers; that's when the built-in DAC is switched on.
 
-The VS1053b chip has 2048 bytes of internal buffer. Depending on your music file's bit rate, that should give you ample time between consecutive `loop()` invocations to do your other stuff - for reference, a full buffer's worth of a 128 kbps MP3 file amounts to a bit more than 100 milliseconds that you are free to use as you please while the VS1053b chip runs out of data.
+The VS1053b chip has 2048 bytes of internal buffer. Depending on your music file's bit rate, that should give you ample time between consecutive `loop()` invocations to do your other stuff - for reference, a full buffer's worth of a 128 kbps MP3 file amounts to a bit more than 100 milliseconds that you are free to use as you please until the VS1053b chip runs out of data.
 
 You'll get best results if you call `loop()` as frequently as you can, and if your other code is also done in a non-blocking manner - see the [BlinkWithoutDelay](http://arduino.cc/en/Tutorial/BlinkWithoutDelay) tutorial for an example of how to do that.
 
