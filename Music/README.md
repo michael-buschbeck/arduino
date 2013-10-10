@@ -96,7 +96,7 @@ It's worse!
 
 There is no playlist support. And you'll have to open your music files yourself.
 
-The Music library does nothing with the on-board LED and buttons on Seeedstudio's Music Shield - but those are trivial to use in your own code, if you want to. (Or you can ignore them and use those pins otherwise, at least those connected to the buttons.)
+The Music library does nothing with the on-board LED and buttons on Seeedstudio's Music Shield - but those are trivial to use in your own code, if you want to. Have a look at the `PlayWithControls` example for how to do that. (Or you can ignore them and use those pins otherwise, at least those connected to the buttons.)
 
 The SD and SPI libraries used by Seeedstudio's library are slimmed down, which saves some program memory space.
 
