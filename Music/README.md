@@ -14,29 +14,40 @@ How?
 
 ### Installation
 
-Download the `Music` folder from the `libraries` directory.
-
-Then, in the Arduino IDE, select *Sketch*, *Import library*, *Add library...* and point it to the `Music` folder you downloaded.
+Download the `Music`, `Pin` and `Timer` directories and place them in the `libraries` folder in your Arduino Sketchbook directory.
 
 
 ### Usage
 
-Include the Music library in your sketch:
+Include the [SD](http://arduino.cc/en/Reference/SD) and [SPI](http://arduino.cc/en/Reference/SPI) libraries, the Music library and the Pin library in your sketch:
 
-    #include <Music.h>
+    #include <SD.h>
+    #include <SPI.h>
+    #include "Music.h"
+    #include "Pin.h"
 
 **Do not** include Seeedstudio's `MusicPlayer.h` library as well  they'll both try do use the same resources, and that won't work. (In particular, the Music library uses Arduino's standard [SD](http://arduino.cc/en/Reference/SD) and [SPI](http://arduino.cc/en/Reference/SPI) libraries, while Seeedstudio's library uses its own libraries for that.)
 
-Before first use, initialize the Music library (usually in your `setup()` routine) like this:
+In your `setup()` routine, initialize everything:
 
-    // use default pins:
+    // initialize SPI communications
+    SPI.begin();
+    SPI.setDataMode(SPI_MODE0);
+    SPI.setBitOrder(MSBFIRST);
+    SPI.setClockDivider(SPI_CLOCK_DIV4);
+
+    // initialize SD card reader
+    SD.begin();
+
+    // initialize the Music library,
+    // using the default pins:
     // A0 - reset
     // A1 - data request
     // A2 - SPI slave select: data
     // A3 - SPI slave select: control
     Music.begin();
 
-There's also an overloaded `begin()` method that explicitly takes those four pin addresses, just in case you'd like to use the Music library with some other VS1053b-based board that uses different pins.
+There's also a variant of the `Music.begin()` method that explicitly takes those four pin addresses, just in case you'd like to use the Music library with some other VS1053b-based board that uses different pins.
 
 After initialization, you can call the following methods:
 
