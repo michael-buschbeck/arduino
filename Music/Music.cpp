@@ -157,9 +157,9 @@ inline void CMusic::Register::WriteUntilPinOrTimeout<TICKS>::wait(CMusic& music)
   static unsigned long const microsDeltaTimeout =
     (TICKS + ticksPerIncrement - 1) / ticksPerMicro + microsPerIncrement;
 
-  unsigned long microsTimeout = micros() + microsDeltaTimeout;
+  unsigned long microsStart = micros();
 
-  while (music._pinRequest == LOW && micros() <= microsTimeout);
+  while (music._pinRequest == LOW && micros() - microsStart <= microsDeltaTimeout);
 }
 
 
