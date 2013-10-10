@@ -393,9 +393,6 @@ void CMusic::reset()
     | 0x3  << 11    // SC_ADD  = 0b11   (set clock modification by decoder allowed to max)
     | 0x00 <<  0);  // SC_FREQ = 0      (indicate XTALI frequency is default 12.288 MHz)
 
-  // Serial.print(F("SCI_CLOCKF = 0x"));
-  // Serial.println(read<Register::SCI_CLOCKF>(), HEX);
-
   SPCR = saveSPCR;
   SPSR = saveSPSR;
 
