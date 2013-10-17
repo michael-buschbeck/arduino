@@ -34,8 +34,13 @@ class CMusic
 public:
   CMusic();
 
-  void begin(uint8_t addressPinReset = A0, uint8_t addressPinRequest = A1, uint8_t addressPinSelectData = A2, uint8_t addressPinSelectControl = A3);
-  void reset();
+  void begin(
+    uint8_t addressPinReset         = A0,
+    uint8_t addressPinRequest       = A1,
+    uint8_t addressPinSelectData    = A2,
+    uint8_t addressPinSelectControl = A3);
+
+  void reset(bool hardware = true, bool settings = true);
 
   enum State {
     STATE_IDLE,

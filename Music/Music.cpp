@@ -368,33 +368,35 @@ void CMusic::begin(uint8_t addressPinReset, uint8_t addressPinRequest, uint8_t a
 }
 
 
-void CMusic::reset()
+void CMusic::reset(bool hardware, bool settings)
 {
-  // hardware reset
+  if (hardware) {
+    // hardware reset
 
-  _pinSelectControl = HIGH;
-  _pinSelectData    = HIGH;
+    _pinSelectControl = HIGH;
+    _pinSelectData    = HIGH;
 
-  _pinReset = LOW;   delay(10);
-  _pinReset = HIGH;  delay(10);
+    _pinReset = LOW;   delay(10);
+    _pinReset = HIGH;  delay(10);
 
-  while (_pinRequest == LOW);
+    while (_pinRequest == LOW);
 
 
-  // set clock
+    // set clock
 
-  uint16_t saveSPCR = SPCR;
-  uint16_t saveSPSR = SPSR;
+    uint16_t saveSPCR = SPCR;
+    uint16_t saveSPSR = SPSR;
 
-  SPI.setClockDivider(SPI_CLOCK_DIV64);
+    SPI.setClockDivider(SPI_CLOCK_DIV64);
 
-  write<Register::SCI_CLOCKF>(
-      0x4  << 13    // SC_MULT = 0b100  (set clock multiplier to 3.5)
-    | 0x3  << 11    // SC_ADD  = 0b11   (set clock modification by decoder allowed to max)
-    | 0x00 <<  0);  // SC_FREQ = 0      (indicate XTALI frequency is default 12.288 MHz)
+    write<Register::SCI_CLOCKF>(
+        0x4  << 13    // SC_MULT = 0b100  (set clock multiplier to 3.5)
+      | 0x3  << 11    // SC_ADD  = 0b11   (set clock modification by decoder allowed to max)
+      | 0x00 <<  0);  // SC_FREQ = 0      (indicate XTALI frequency is default 12.288 MHz)
 
-  SPCR = saveSPCR;
-  SPSR = saveSPSR;
+    SPCR = saveSPCR;
+    SPSR = saveSPSR;
+  }
 
 
   // software reset
@@ -435,8 +437,13 @@ void CMusic::reset()
 
   _nBytesFlushRemaining = 0;
 
-  _volume  = 255;
-  _balance =   0;
+  if (settings) {
+    _volume  = 255;
+    _balance = 0;
+  }
+  else {
+    updateVolumeAndBalance();
+  }
 }
 
 
